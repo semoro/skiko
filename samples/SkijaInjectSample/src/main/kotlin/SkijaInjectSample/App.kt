@@ -16,7 +16,7 @@ import kotlin.math.sin
 
 fun main(args: Array<String>) {
     repeat(1) {
-        createWindow("window $it")
+        SwingSkia()
     }
 }
 
@@ -51,8 +51,18 @@ fun createWindow(title: String) = SwingUtilities.invokeLater {
         }
     })
 
+    val miRepaint = JMenuItem("Repaint")
+    val ctrlP = KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx())
+    miRepaint.setAccelerator(ctrlP)
+    miRepaint.addActionListener(object : ActionListener {
+        override fun actionPerformed(actionEvent: ActionEvent?) {
+            window.layer.needRedraw()
+        }
+    })
+
     menu.add(miToggleFullscreen)
     menu.add(miFullscreenState)
+    menu.add(miRepaint)
 
     window.setJMenuBar(menuBar)
 
