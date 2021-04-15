@@ -85,12 +85,13 @@ class SkikoProperties(private val myProject: Project) {
     val visualStudioBuildToolsDir: File?
         get() = System.getenv()["SKIKO_VSBT_PATH"]?.let { File(it) }?.takeIf { it.isDirectory }
 
-    val skijaDir: File?
-        get() = System.getenv()["SKIJA_DIR"]?.let { File(it) }?.takeIf { it.isDirectory }
+    val skijaDir: File
+        get() = File("/home/semoro/HomeWorkspace/skija")//System.getenv()["SKIJA_DIR"]?.let { File(it) }?.takeIf { it.isDirectory }
 
     val skiaDir: File?
-        get() = (System.getenv()["SKIA_DIR"] ?: System.getProperty("skia.dir"))?.let { File(it) }
-            ?.takeIf { it.isDirectory }
+        get() = File("/home/semoro/HomeWorkspace/skia-build/skia")
+//        get() = (System.getenv()["SKIA_DIR"] ?: System.getProperty("skia.dir"))?.let { File(it) }
+//            ?.takeIf { it.isDirectory }
 
     val composeRepoUrl: String
         get() = System.getenv("COMPOSE_REPO_URL") ?: "https://maven.pkg.jetbrains.space/public/p/compose/dev"

@@ -85,7 +85,7 @@ open class SkiaLayer() : HardwareLayer() {
                     rectangle.y,
                     rectangle.x + rectangle.width,
                     rectangle.y + rectangle.height
-                ),
+                )!!,
                 ClipMode.DIFFERENCE,
                 true
             )

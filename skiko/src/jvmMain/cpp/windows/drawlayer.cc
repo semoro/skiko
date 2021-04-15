@@ -41,7 +41,7 @@ private:
         if (jvm != NULL)
         {
             JNIEnv *env;
-            jvm->GetEnv((void **)&env, JNI_VERSION_10);
+            jvm->GetEnv((void **)&env, JNI_VERSION_1_2);
             wglMakeCurrent(device, context);
 
             static jclass wndClass = NULL;
@@ -106,7 +106,7 @@ extern "C"
         jint lock = 0;
         JAWT_Win32DrawingSurfaceInfo *dsi_win;
 
-        awt.version = (jint)JAWT_VERSION_9;
+        awt.version = (jint)JAWT_VERSION_1_3;
         result = Skiko_GetAWT(env, &awt);
 
         if (result == JNI_FALSE)
@@ -189,7 +189,7 @@ extern "C"
         jint lock = 0;
         JAWT_Win32DrawingSurfaceInfo *dsi_win;
 
-        awt.version = (jint)JAWT_VERSION_9;
+        awt.version = (jint)JAWT_VERSION_1_3;
         result = Skiko_GetAWT(env, &awt);
 
         if (result == JNI_FALSE)

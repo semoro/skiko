@@ -68,6 +68,7 @@ fun AbstractCopyTask.configureSkiaCopy(targetDir: File) {
 
 val skiaDir = run {
     if (skiko.skiaDir != null) {
+        println("Using skiaDir: " + skiko.skiaDir)
         tasks.register("skiaDir", DefaultTask::class) {
             // dummy task to simplify usage of the resulting provider (see `else` branch)
             // if a file provider is not created from a task provider,
@@ -130,6 +131,7 @@ val skijaSrcDir = run {
     tasks.register("delombokSkija", JavaExec::class) {
         classpath = lombok + jetbrainsAnnotations
         main = "lombok.launch.Main"
+        println(skijaDir.get())
         args("delombok", skijaDir.get().resolve("shared/src/main/java"), "-d", delombokSkijaSrcDir)
         inputs.dir(skijaDir)
         outputs.dir(delombokSkijaSrcDir)
@@ -148,7 +150,7 @@ val skijaSrcDir = run {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = "1.8"
         }
         withJava()
     }
@@ -193,18 +195,19 @@ kotlin {
 }
 
 tasks.withType(JavaCompile::class.java).configureEach {
-    this.getOptions().compilerArgs.addAll(listOf("-source", "11", "-target", "11"))
+    this.getOptions().compilerArgs.addAll(listOf("-source", "8", "-target", "8"))
 }
 
 // See https://docs.gradle.org/current/userguide/cpp_library_plugin.html.
 tasks.withType(CppCompile::class.java).configureEach {
     // Prefer 'java.home' system property to simplify overriding from Intellij.
     // When used from command-line, it is effectively equal to JAVA_HOME.
-    if (JavaVersion.current() < JavaVersion.VERSION_11) {
-        error("JDK 11+ is required, but Gradle JVM is ${JavaVersion.current()}. " +
-                "Check JAVA_HOME (CLI) or Gradle settings (Intellij).")
-    }
-    val jdkHome = System.getProperty("java.home") ?: error("'java.home' is null")
+//    if (JavaVersion.current() < JavaVersion.VERSION_11) {
+//        error("JDK 11+ is required, but Gradle JVM is ${JavaVersion.current()}. " +
+//                "Check JAVA_HOME (CLI) or Gradle settings (Intellij).")
+//    }
+    val jdkHome = "/usr/lib/jvm/java-8-openjdk" ?: error("'java.home' is null")
+    println(jdkHome)
     dependsOn(skiaDir)
     val skiaDir = skiaDir.get().absolutePath
     compilerArgs.addAll(listOf(
@@ -496,6 +499,12 @@ publishing {
             artifactId = SkikoArtifacts.commonArtifactId
             afterEvaluate {
                 artifact(skikoJvmJar.map { it.archiveFile.get() })
+                artifact(skikoJvmJar.map { it.archiveFile.get() }.get().asFile.let {
+                    it.resolveSibling(it.nameWithoutExtension + "-sources.jar")
+                }) {
+                    this.classifier = "sources"
+
+                }
             }
         }
         create<MavenPublication>("skikoJvmRuntime") {

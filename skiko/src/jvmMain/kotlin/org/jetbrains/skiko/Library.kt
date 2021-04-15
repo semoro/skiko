@@ -10,7 +10,9 @@ import javax.swing.UIManager
 object Library {
     private var loaded = false
 
-    private val cacheRoot = "${System.getProperty("user.home")}/.skiko/"
+    private val cacheRoot = "${System.getProperty("user.home")}/.skiko/".also {
+        File(it).deleteRecursively()
+    }
 
     private fun loadOrGet(cacheDir: File, path: String, resourceName: String, isLibrary: Boolean) {
         val file = File(cacheDir, resourceName)
@@ -53,7 +55,8 @@ object Library {
 
         try {
             // Init code executed after library was loaded.
-            org.jetbrains.skija.impl.Library._nAfterLoad()
+
+            org.jetbrains.skija.impl.Library::class.java.getMethod("_nAfterLoad").invoke(null)
         } catch (t: Throwable) {
             t.printStackTrace()
         }

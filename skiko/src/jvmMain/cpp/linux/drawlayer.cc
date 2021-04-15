@@ -42,7 +42,7 @@ private:
         if (jvm != NULL)
         {
             JNIEnv *env;
-            jvm->GetEnv((void **)&env, JNI_VERSION_10);
+            jvm->GetEnv((void **)&env, JNI_VERSION_1_2);
             JAWT awt;
             JAWT_DrawingSurface *ds = NULL;
             JAWT_DrawingSurfaceInfo *dsi = NULL;
@@ -51,7 +51,7 @@ private:
             jint lock = 0;
             JAWT_X11DrawingSurfaceInfo *dsi_x11;
 
-            awt.version = (jint)JAWT_VERSION_9;
+            awt.version = (jint)JAWT_VERSION_1_3;
             result = Skiko_GetAWT(env, &awt);
 
             if (result == JNI_FALSE)
@@ -140,7 +140,7 @@ extern "C"
         jint lock = 0;
         JAWT_X11DrawingSurfaceInfo *dsi_x11;
 
-        awt.version = (jint)JAWT_VERSION_9;
+        awt.version = (jint)JAWT_VERSION_1_3;
         result = Skiko_GetAWT(env, &awt);
 
         if (result == JNI_FALSE)
@@ -205,7 +205,7 @@ extern "C"
         jint lock = 0;
         JAWT_X11DrawingSurfaceInfo *dsi_x11;
 
-        awt.version = (jint)JAWT_VERSION_9;
+        awt.version = (jint)JAWT_VERSION_1_3;
         result = Skiko_GetAWT(env, &awt);
 
         if (result == JNI_FALSE)
@@ -265,7 +265,7 @@ extern "C"
         jint lock = 0;
         JAWT_X11DrawingSurfaceInfo *dsi_x11;
 
-        awt.version = (jint)JAWT_VERSION_9;
+        awt.version = (jint)JAWT_VERSION_1_3;
         result = Skiko_GetAWT(env, &awt);
 
         if (result == JNI_FALSE)

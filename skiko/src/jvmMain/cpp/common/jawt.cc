@@ -65,7 +65,7 @@ extern "C" jboolean Skiko_GetAWT(JNIEnv *env, JAWT *awt) {
         char jdkHome[FILENAME_MAX];
         findJdkHome(env, jdkHome, sizeof(jdkHome));
         char path[FILENAME_MAX];
-        snprintf(path, sizeof(path), "%s/lib/libjawt%s", jdkHome,
+        snprintf(path, sizeof(path), "%s/lib/amd64/libjawt%s", jdkHome,
 #if SK_BUILD_FOR_MAC
              ".dylib"
 #else

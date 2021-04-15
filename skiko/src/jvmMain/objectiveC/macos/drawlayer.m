@@ -265,7 +265,7 @@ JNIEXPORT void JNICALL Java_org_jetbrains_skiko_HardwareLayer_updateLayer(JNIEnv
     jint lock = 0;
     NSObject<JAWT_SurfaceLayers>* dsi_mac = NULL;
 
-    awt.version = JAWT_VERSION_9 /* | JAWT_MACOSX_USE_CALAYER */;
+    awt.version = JAWT_VERSION_1_3 /* | JAWT_MACOSX_USE_CALAYER */;
     result = Skiko_GetAWT(env, &awt);
     assert(result != JNI_FALSE);
 
